@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool facingRight = true;
     [HideInInspector] public bool jump = false;
+    [HideInInspector] public bool isDead = false;
 
     public float moveForce = 400f;
     public float maxSpeed = 7f;
@@ -24,12 +25,14 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
 
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+
+        transform.localRotation = Quaternion.identity; //to make the tumbling stop.
 
         if (CrossPlatformInputManager.GetButtonDown("Jump") && grounded)
         {
@@ -59,6 +62,15 @@ public class PlayerController : MonoBehaviour
             jump = false;
         }
 
+        if (isDead)
+        {
+            anim.Play("Die");
+            rb.AddForce(new Vector2(-moveForce, jumpForce));
+            isDead = false;
+            this.enabled = false; //disables the Player Controller Script to avoid movement;
+            //call the game over screen after delay                       
+        }
+
     }
 
     void Flip()
@@ -67,5 +79,13 @@ public class PlayerController : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            isDead = true;
+        }
     }
 }
