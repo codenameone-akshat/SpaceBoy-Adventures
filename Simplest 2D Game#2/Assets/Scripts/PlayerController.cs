@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -76,7 +77,8 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(-moveForce, jumpForce));
             isDead = false;
             this.enabled = false; //disables the Player Controller Script to avoid movement;
-            //call the game over screen after delay                       
+            //call the game over screen after delay 
+            SceneManager.LoadScene("Dirt");
         }
 
     }
