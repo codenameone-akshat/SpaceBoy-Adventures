@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool jump = false;
     [HideInInspector] public bool isDead = false;
 
+    public Text scoreText;
     public float moveForce = 400f;
     public float maxSpeed = 7f;
     public float jumpForce = 3000f;
@@ -19,11 +21,14 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     public Rigidbody2D rb;
 
+    int score = 0;
+
     // Use this for initialization
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        scoreText.text = "0";
     }
     
     // Update is called once per frame
@@ -38,6 +43,9 @@ public class PlayerController : MonoBehaviour
         {
             jump = true;
         }
+
+        scoreText.text = score.ToString();
+
     }
 
     private void FixedUpdate()
@@ -86,6 +94,20 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy"))
         {
             isDead = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            score += 500;   //coins are worth 500 points | common
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Gem"))
+        {
+            score += 2000;  //gems are worth 5000 points | rare | 1 max in a level
+            Destroy(collision.gameObject);
         }
     }
 }

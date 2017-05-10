@@ -8,11 +8,11 @@ public class Destroyer : MonoBehaviour {
 
     private void Update()
     {
-        transform.position = new Vector3(player.position.x - 40, 0f, 0f);
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        GameObject.Destroy(collision.gameObject); // this destroys a rigidbody only
-        //refer internet to learn how to destroy fixed joints
+        transform.position = new Vector3(player.position.x - 50, player.position.y, 0f); //object moves with player
+        
+        foreach (Collider2D c in Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 100), 0f)) //get all the colliders
+        {  
+            Destroy(c.gameObject);
+        }        
     }
 }   
