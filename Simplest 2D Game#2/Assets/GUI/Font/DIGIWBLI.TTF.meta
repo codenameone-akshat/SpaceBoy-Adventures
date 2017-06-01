@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 21a09a145f9edab4795f809dc65b9592
+timeCreated: 1496264619
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Digital Woodcuts Black ITC TT
+  fontNames:
+  - Digital Woodcuts Black ITC TT
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

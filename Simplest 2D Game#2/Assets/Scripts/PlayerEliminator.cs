@@ -16,7 +16,7 @@ public class PlayerEliminator : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            SceneManager.LoadScene("Dirt");
-        //SceneManager.LoadScene("GameOverMenu")
+            SceneManager.LoadScene(0);
+        //TODO SceneManager.LoadScene("GameOverMenu")
     }
 }

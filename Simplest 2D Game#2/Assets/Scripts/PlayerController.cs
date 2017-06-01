@@ -13,14 +13,15 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isDead = false;
 
     public Text scoreText;
-    public float moveForce = 400f;
+    public float moveForce = 500f;
     public float maxSpeed = 7f;
-    public float jumpForce = 3000f;
+    public float jumpForce = 3500f;
     public Transform groundCheck;
 
     public bool grounded = false;
     public Animator anim;
     public Rigidbody2D rb;
+    public AudioClip[] aud;
 
     int score = 0;
 
@@ -55,10 +56,12 @@ public class PlayerController : MonoBehaviour
 
         anim.SetFloat("Speed", Mathf.Abs(h));
 
+        rb.AddForce(new Vector2(1, 0) * rb.velocity.x * -15);   //to counter the slipping force -15 is the multiplier
+
         if (h * rb.velocity.x < maxSpeed)
-            rb.AddForce(Vector2.right * h * moveForce);
+            rb.AddForce(Vector2.right * h * moveForce); //if not at max, then keep adding force
         if (Mathf.Abs(rb.velocity.x) > maxSpeed)
-            rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //if greater then same direction and max speed (direction by sign)
 
         if (h > 0 && !facingRight)
             Flip();
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour
         if (jump)
         {
             anim.Play("Jump");
+            AudioSource.PlayClipAtPoint(aud[0], rb.transform.position);
             rb.AddForce(new Vector2(0f, jumpForce));
             jump = false;
         }
@@ -77,7 +81,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(-moveForce, jumpForce));
             isDead = false;
             this.enabled = false; //disables the Player Controller Script to avoid movement;
-            //call the game over screen after delay 
+            //TODO call the game over screen after delay 
             SceneManager.LoadScene("Dirt");
         }
 
@@ -104,11 +108,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Coin"))
         {
             score += 500;   //coins are worth 500 points | common
+            AudioSource.PlayClipAtPoint(aud[1], this.transform.position);
             Destroy(collision.gameObject);
+
         }
         else if (collision.gameObject.CompareTag("Gem"))
         {
             score += 2000;  //gems are worth 5000 points | rare | 1 max in a level
+            AudioSource.PlayClipAtPoint(aud[1], this.transform.position);
             Destroy(collision.gameObject);
         }
     }
