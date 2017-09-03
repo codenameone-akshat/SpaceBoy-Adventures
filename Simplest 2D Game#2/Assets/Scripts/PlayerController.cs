@@ -78,11 +78,11 @@ public class PlayerController : MonoBehaviour
         if (isDead)
         {
             anim.Play("Die");
+            AudioSource.PlayClipAtPoint(aud[2], rb.transform.position);
             rb.AddForce(new Vector2(-moveForce, jumpForce));
             isDead = false;
             this.enabled = false; //disables the Player Controller Script to avoid movement;
-            //TODO call the game over screen after delay 
-            SceneManager.LoadScene("Dirt");
+            //TODO call the score screen after delay 
         }
 
     }
@@ -100,6 +100,12 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy"))
         {
             isDead = true;
+        }
+
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            isDead = true;
+            //TODO SceneManager.LoadScene("GameOverMenu")
         }
     }
 
