@@ -10,6 +10,6 @@ public class PlayerEliminator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        this.transform.position = new Vector3(cameraPos.position.x, -15f);
+        this.transform.position = new Vector3(cameraPos.position.x + 5f, -12f);
 	}
 }

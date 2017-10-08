@@ -5,16 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour {
 
+    #region Initializations
     public AudioClip aud;
-    // Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    string highscoreSave = "";
+    #endregion Initializations;
 
     public void Restart()
     {
@@ -38,5 +32,15 @@ public class ButtonHandler : MonoBehaviour {
     {
         AudioSource.PlayClipAtPoint(aud, new Vector3(0, 0, 0));
         Application.Quit();
+    }
+
+    public void ResetHighScore()
+    {
+        AudioSource.PlayClipAtPoint(aud, new Vector3(0, 0, 0));
+
+        for (int i = 0; i < 5; i++)
+        {
+            PlayerPrefs.SetInt("Highscore" + i.ToString(), 0);
+        }
     }
 }
