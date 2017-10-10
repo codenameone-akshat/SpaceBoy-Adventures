@@ -11,6 +11,7 @@ TagManager:
   - Gem
   - Environment
   - Water
+  - Castle
   layers:
   - Default
   - TransparentFX

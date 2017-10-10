@@ -677,7 +677,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114267541590346160, guid: 1ee8ad4207873324da372c559b51d427,
         type: 2}
-      propertyPath: scoreText
+      propertyPath: HUDScore
       value: 
       objectReference: {fileID: 1100023282}
     - target: {fileID: 114267541590346160, guid: 1ee8ad4207873324da372c559b51d427,

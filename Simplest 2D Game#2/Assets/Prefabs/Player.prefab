@@ -165,7 +165,10 @@ MonoBehaviour:
   facingRight: 1
   jump: 0
   isDead: 0
-  scoreText: {fileID: 0}
+  HUDScore: {fileID: 0}
+  UIScore: {fileID: 0}
+  UIHighScore: {fileID: 0}
+  ScorePanel: {fileID: 0}
   moveForce: 600
   maxSpeed: 5
   jumpForce: 1280

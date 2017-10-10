@@ -6531,7 +6531,7 @@ MonoBehaviour:
   facingRight: 1
   jump: 0
   isDead: 0
-  scoreText: {fileID: 1434204049}
+  HUDScore: {fileID: 1434204049}
   UIScore: {fileID: 115515087}
   UIHighScore: {fileID: 1670790901}
   ScorePanel: {fileID: 270569197}

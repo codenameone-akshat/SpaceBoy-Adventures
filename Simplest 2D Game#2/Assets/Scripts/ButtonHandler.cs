@@ -38,7 +38,7 @@ public class ButtonHandler : MonoBehaviour {
     {
         AudioSource.PlayClipAtPoint(aud, new Vector3(0, 0, 0));
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 9; i++)
         {
             PlayerPrefs.SetInt("Highscore" + i.ToString(), 0);
         }

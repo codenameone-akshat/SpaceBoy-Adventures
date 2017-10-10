@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool jump = false;
     [HideInInspector] public bool isDead = false;
 
-    public Text scoreText;
+    public Text HUDScore;
     public Text UIScore;
     public Text UIHighScore;
     public GameObject ScorePanel;
@@ -39,41 +39,22 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
-        //-------------------------------Getting Highscore and Setting Initial Score and Highscore Values------------------------------------
-        scoreText.text = "0";
-        UIScore.text = "0";
-        highScoreSave = "Highscore" + SceneManager.GetActiveScene().buildIndex.ToString();   //saves score level by level. EX: Highscore1 for level 1 etc etc
-        highScore = PlayerPrefs.GetInt(highScoreSave, 0);   //loading the highscore if available, else 0
-        UIHighScore.text = highScore.ToString();
+        InitializeScore();  //initializes the score
     }
 
     void Update()
     {
-        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  //check if player is grounded
 
         transform.localRotation = Quaternion.identity; //to make the tumbling stop.
 
         if (CrossPlatformInputManager.GetButtonDown("Jump") && grounded)
-        {
             jump = true;
-        }
 
-        scoreText.text = score.ToString();
+        HUDScore.text = score.ToString();  //to set the HUD score
 
-        //---------------------------Setting Highscore to the Current Score if Greater--------------------------------------
         if(isDead)
-        {
-            if (score > highScore)
-            {
-                highScore = score;
-                PlayerPrefs.SetInt(highScoreSave, score);
-                PlayerPrefs.Save();
-            }
-            ScorePanel.SetActive(true); //setting the pop up active
-        }
-
-        UIScore.text = score.ToString();
-        UIHighScore.text = highScore.ToString();
+            DisplayFinalScore();
     }
 
     private void FixedUpdate()
@@ -95,26 +76,13 @@ public class PlayerController : MonoBehaviour
             Flip();
 
         if (jump)
-        {
-            anim.Play("Jump");
-            AudioSource.PlayClipAtPoint(aud[0], rb.transform.position);
-            rb.AddForce(new Vector2(0f, jumpForce));
-            jump = false;
-        }
+            JumpScenario();
 
         if (isDead)
-        {
-            anim.Play("Die");
-            AudioSource.PlayClipAtPoint(aud[2], rb.transform.position);
-            rb.AddForce(new Vector2(-moveForce, jumpForce));
-            isDead = false;
-            this.enabled = false; //disables the Player Controller Script to avoid movement;
-            //TODO call the score screen after delay 
-        }
-
+            DeathScenario();
     }
 
-    void Flip()
+    void Flip()     //flip the player according to the player movement direction
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
@@ -151,4 +119,45 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
+    void InitializeScore()  //to initialize the score
+    {
+        //-------------------------------Getting Highscore and Setting Initial Score and Highscore Values------------------------------------
+        HUDScore.text = "0";
+        UIScore.text = "0";
+        highScoreSave = "Highscore" + SceneManager.GetActiveScene().buildIndex.ToString();   //saves score level by level. EX: Highscore1 for level 1 etc etc
+        highScore = PlayerPrefs.GetInt(highScoreSave, 0);   //loading the highscore if available, else 0
+        UIHighScore.text = highScore.ToString();
+    }  
+
+    [HideInInspector] public void DisplayFinalScore()    // to display final score
+    {
+        if (score > highScore)
+        {
+            highScore = score;
+            PlayerPrefs.SetInt(highScoreSave, score);
+            PlayerPrefs.Save();
+        }
+        ScorePanel.SetActive(true); //setting the pop up active
+
+        UIScore.text = score.ToString();
+        UIHighScore.text = highScore.ToString();
+    }   
+
+    void JumpScenario()     //things to do when we jump
+    {
+        anim.Play("Jump");
+        AudioSource.PlayClipAtPoint(aud[0], rb.transform.position);
+        rb.AddForce(new Vector2(0f, jumpForce));
+        jump = false;
+    }  
+        
+    void DeathScenario()    //things to do when we die
+    {
+        anim.Play("Die");
+        AudioSource.PlayClipAtPoint(aud[2], rb.transform.position);
+        rb.AddForce(new Vector2(-moveForce, jumpForce));
+        isDead = false;
+        this.enabled = false; //disables the Player Controller Script to avoid movement;
+    }  
 }

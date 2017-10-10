@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4690610674444926}
   m_Layer: 0
   m_Name: Castle
-  m_TagString: Untagged
+  m_TagString: Castle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 61490256436692072}
   m_Layer: 0
   m_Name: castle_grey
-  m_TagString: Untagged
+  m_TagString: Castle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,7 +109,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1381292780682332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 172.63222, y: 4.957035, z: 4.84}
+  m_LocalPosition: {x: 135.11002, y: 3.5886292, z: 4.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4654382595741044}
@@ -170,6 +170,7 @@ MonoBehaviour:
   aud: {fileID: 8300000, guid: a50b656c6f2fa3e42994cd0909d91faf, type: 3}
   player: {fileID: 0}
   playerC: {fileID: 0}
+  ScorePanel: {fileID: 0}
 --- !u!212 &212251408537327536
 SpriteRenderer:
   m_ObjectHideFlags: 1
